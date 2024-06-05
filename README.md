@@ -1,3 +1,8 @@
+# Published page
+
+The contents of this repository are published as a github page at the URL 
+[Here](https://saurabh500.github.io/sql-server-client-docs/)
+
 # sql-server-client-docs
 A repository to track the internals of how a SQL Server client works.
 

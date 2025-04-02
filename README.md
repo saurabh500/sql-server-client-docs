@@ -3,19 +3,21 @@
 The contents of this repository are published as a github page at the URL 
 [Here](https://saurabh500.github.io/sql-server-client-docs/)
 
-# sql-server-client-docs
-A repository to track the internals of how a SQL Server client works.
+# Purpose
 
-The details on this site have been prepared during the course of my work on Sql Client, the .Net Driver for SQL server.
+This repository serves as a comprehensive documentation hub for SQL Server drivers. It is designed to be a living resource where information about the current SQL Server drivers is continuously updated and expanded.
+The repository is structured to support GitHub Pages, providing an easily accessible and navigable website for developers and users to explore some of the inner working of SQL Server driver implementation.
 
-The documentation here is my understanding of how the client is implemented and its association with ADO.Net and the TDS protocol, for SQL Server.
+This repo will focus mostly on TDS protocol. There are some behaviors that SQL server clients implement which are not document in the protocol, e.g. How the DNS resolution should work in various scenarios.
 
-This site is not backed / funded by Microsoft. 
-
-The motivation to create this site, is to add some clarity around the working of the SQL server client, which might be helpful to any OSS developer. 
+This content is not endorsed by Microsoft. The details mentioned here are sourced from the TDS protocol, and any open source client driver that supports SQL server.
 
 # Contributions are welcome
 
-TBD: A contribution guide is needed for this repository.
+There is no formal contribution guide. But Open a PR, state what you are adding and why? 
 
+# WIP 
 
+I am working on writing up how SQL RPC works, some of the fragments are here.
+
+Refer to the [Name Mapping Documentation](./docs/areas/datatypes/namemapping.md).

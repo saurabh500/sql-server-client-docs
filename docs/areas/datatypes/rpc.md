@@ -3,7 +3,7 @@
 
 This page describes how to construct a RPC Request object. The page starts from the protocol grammar and then creates sequence diagrams.
 
-The sequence diagrams and meant to be converted to code.
+The sequence diagrams are meant to be converted to code.
 
 ## Grammar
 
@@ -232,6 +232,27 @@ ParamMetaData    =   B_VARCHAR
                     StatusFlags 
                     (TYPE_INFO / TVP_TYPE_INFO)    ; (TVP_TYPE_INFO introduced in TDS 7.3) 
 ```
+
+ImplNote: ParamMetaData -> The name (B_VARCHAR) should have a @ prefixed to the parameter name, if it doesn't already have one.
+
+StatusFlags: 
+
+```C#
+// Options is the status flag.
+if (index < systemParamCount)
+{
+    retval = systemParams[index];
+    options = systemParamOptions[index];
+}
+else
+{
+    long data = userParamMap[index - systemParamCount];
+    int paramIndex = (int)(data & int.MaxValue);
+    options = (byte)((data >> 32) & 0xFF);
+    retval = userParams[paramIndex];
+}
+```
+
 
 ```mermaid
 sequenceDiagram

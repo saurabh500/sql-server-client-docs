@@ -24,4 +24,4 @@ There is no formal contribution guide. But Open a PR, state what you are adding 
 
 I am working on writing up how SQL RPC works, some of the fragments are here.
 
-Refer to the [RPC execution documentation](./areas/datatypes/namemapping.md).
+Refer to the [RPC execution documentation](./areas/datatypes/rpc.md).

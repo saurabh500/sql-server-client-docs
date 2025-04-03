@@ -63,6 +63,7 @@ ParamCipherInfo  =   TYPE_INFO
                     CekVersion 
                     CekMDVersion 
                     NormVersion 
+
 ParameterData    =   ParamMetaData 
                     ParamLenData 
                     [ParamCipherInfo] 
@@ -226,6 +227,12 @@ sequenceDiagram
 
 ### ParamMetaData
 
+```ABNF
+ParamMetaData    =   B_VARCHAR 
+                    StatusFlags 
+                    (TYPE_INFO / TVP_TYPE_INFO)    ; (TVP_TYPE_INFO introduced in TDS 7.3) 
+```
+
 ```mermaid
 sequenceDiagram
   participant User
@@ -241,6 +248,18 @@ sequenceDiagram
 ```
 
 ### ParamCipherInfo
+
+```ABNF
+ParamCipherInfo  =   TYPE_INFO 
+                    EncryptionAlgo 
+                    [AlgoName] 
+                    EncryptionType 
+                    DatabaseId  
+                    CekId 
+                    CekVersion 
+                    CekMDVersion 
+                    NormVersion 
+```
 
 ```mermaid
 sequenceDiagram
@@ -261,6 +280,12 @@ sequenceDiagram
 ```
 
 ### ParameterData
+
+```ABNF                  
+ParameterData    =   ParamMetaData 
+                    ParamLenData 
+                    [ParamCipherInfo] 
+```
 
 ```mermaid
 sequenceDiagram

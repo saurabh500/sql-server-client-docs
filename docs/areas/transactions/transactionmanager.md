@@ -109,3 +109,15 @@ TransMgrReq      =   ALL_Headers
   - **RequestPayload**: `XACT_SAVEPOINT_NAME`  
     A nonempty name MUST be specified as part of this request. Otherwise, an error is raised.
 
+## Tabular representation
+
+| RequestType          | Possible Values                                                                 | Request Payload                                                                 |
+|----------------------|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| TM_GET_DTC_ADDRESS   | 0 = Returns DTC network address as a result set with a single column, single-row binary value. | `US_VARBYTE`: The RequestPayload SHOULD be a zero-length US_VARBYTE.            |
+| TM_PROPAGATE_XACT    | 1 = Imports DTC transaction into the server and returns a local transaction descriptor as a varbinary result set. | `US_VARBYTE`: Data contains an opaque buffer used by the server to enlist in a DTC transaction. |
+| TM_BEGIN_XACT        | 5 = Begins a transaction and returns the descriptor in an ENVCHANGE type 8.     | `ISOLATION_LEVEL`, `BEGIN_XACT_NAME`: Begins a new transaction or increments trancount if already in a transaction. |
+| TM_PROMOTE_XACT      | 6 = Converts an active local transaction into a distributed transaction and returns an opaque buffer in an ENVCHANGE type 15. | No payload: Promotes the transaction of the current request.                    |
+| TM_COMMIT_XACT       | 7 = Commits a transaction. Depending on the payload of the request, it can additionally request that another local transaction be started. | `XACT_NAME`, `XACT_FLAGS`, `[ISOLATION_LEVEL, BEGIN_XACT_NAME]`: Semantically equivalent to issuing a TSQL COMMIT statement. |
+| TM_ROLLBACK_XACT     | 8 = Rolls back a transaction. Depending on the payload of the request, it can indicate that after the rollback, a local transaction is to be started. | `XACT_NAME`, `XACT_FLAGS`, `[ISOLATION_LEVEL, BEGIN_XACT_NAME]`: Semantically equivalent to issuing a TSQL ROLLBACK statement. |
+| TM_SAVE_XACT         | 9 = Sets a savepoint within the active transaction. This request MUST specify a nonempty name for the savepoint. | `XACT_SAVEPOINT_NAME`: A nonempty name MUST be specified as part of this request. |
+

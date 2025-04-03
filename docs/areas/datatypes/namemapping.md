@@ -1,3 +1,5 @@
+{% include toc.html html=content %}
+
 # The following information can be used for Data encoding
 
 The datatypes are represented by a byte identified according to TDS protocol.

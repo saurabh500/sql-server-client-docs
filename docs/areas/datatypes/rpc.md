@@ -10,87 +10,89 @@ The sequence diagrams and meant to be converted to code.
 The ABNF Grammar.
 
 ```grammar
- ProcIDSwitch     =   %xFF %xFF 
- ProcName         =   US_VARCHAR 
- NameLenProcID    =   ProcName 
-                      / 
-                      (ProcIDSwitch ProcID) 
-  
- fWithRecomp      =   BIT 
- fNoMetaData      =   BIT 
- fReuseMetaData   =   BIT 
- OptionFlags      =   fWithRecomp 
-                      fNoMetaData 
-                      fReuseMetaData 
-                      13FRESERVEDBIT 
-  
- fByRefValue      =   BIT 
- fDefaultValue    =   BIT 
- fEncrypted       =   BIT 
- StatusFlags      =   fByRefValue 
-                      fDefaultValue 
-                      1FRESERVEDBIT 
-                      fEncrypted 
-                      4FRESERVEDBIT 
-  
- ParamMetaData    =   B_VARCHAR 
-                      StatusFlags 
-                      (TYPE_INFO / TVP_TYPE_INFO)    ; (TVP_TYPE_INFO introduced in TDS 7.3) 
- ParamLenData     =   TYPE_VARBYTE 
-  
- EncryptionAlgo   =   BYTE               ; (introduced in TDS 7.4) 
-  
- AlgoName         =   B_VARCHAR          ; (introduced in TDS 7.4) 
-  
- EncryptionType   =   BYTE               ; (introduced in TDS 7.4) 
-  
- NormVersion      =   BYTE               ; (introduced in TDS 7.4) 
-  
- DatabaseId       =   ULONG              ; (introduced in TDS 7.4) 
-  
- CekId            =   ULONG              ; (introduced in TDS 7.4) 
-  
- CekVersion       =   ULONG              ; (introduced in TDS 7.4) 
-  
- CekMDVersion     =   ULONGLONG          ; (introduced in TDS 7.4) 
-  
- ParamCipherInfo  =   TYPE_INFO 
-                      EncryptionAlgo 
-                      [AlgoName] 
-                      EncryptionType 
-                      DatabaseId  
-                      CekId 
-                      CekVersion 
-                      CekMDVersion 
-                      NormVersion 
- ParameterData    =   ParamMetaData 
-                      ParamLenData 
-                      [ParamCipherInfo] 
-  
- EnclavePackage   =   L_VARBYTE          ; (introduced in TDS 7.4) 
-  
- BatchFlag        =   %x80 / %xFF        ; (changed to %xFF in TDS 7.2) 
- NoExecFlag       =   %xFE               ; (introduced in TDS 7.2) 
-  
- RPCReqBatch      =   NameLenProcID 
-                      OptionFlags 
-                      *EnclavePackage 
-                      *ParameterData 
+ProcIDSwitch     =   %xFF %xFF 
+ProcName         =   US_VARCHAR 
+NameLenProcID    =   ProcName 
+                    / 
+                    (ProcIDSwitch ProcID) 
 
- RPCRequest       =   ALL_HEADERS 
-                      RPCReqBatch 
-                      *((BatchFlag / NoExecFlag) RPCReqBatch) 
-                      [BatchFlag / NoExecFlag] 
- 
- RPCRequest       =   ALL_HEADERS 
-                      RPCReqBatch 
-                      *((BatchFlag / NoExecFlag) RPCReqBatch) 
-                      [BatchFlag / NoExecFlag] 
+fWithRecomp      =   BIT 
+fNoMetaData      =   BIT 
+fReuseMetaData   =   BIT 
+OptionFlags      =   fWithRecomp 
+                    fNoMetaData 
+                    fReuseMetaData 
+                    13FRESERVEDBIT 
+
+fByRefValue      =   BIT 
+fDefaultValue    =   BIT 
+fEncrypted       =   BIT 
+StatusFlags      =   fByRefValue 
+                    fDefaultValue 
+                    1FRESERVEDBIT 
+                    fEncrypted 
+                    4FRESERVEDBIT 
+
+ParamMetaData    =   B_VARCHAR 
+                    StatusFlags 
+                    (TYPE_INFO / TVP_TYPE_INFO)    ; (TVP_TYPE_INFO introduced in TDS 7.3) 
+ParamLenData     =   TYPE_VARBYTE 
+
+EncryptionAlgo   =   BYTE               ; (introduced in TDS 7.4) 
+
+AlgoName         =   B_VARCHAR          ; (introduced in TDS 7.4) 
+
+EncryptionType   =   BYTE               ; (introduced in TDS 7.4) 
+
+NormVersion      =   BYTE               ; (introduced in TDS 7.4) 
+
+DatabaseId       =   ULONG              ; (introduced in TDS 7.4) 
+
+CekId            =   ULONG              ; (introduced in TDS 7.4) 
+
+CekVersion       =   ULONG              ; (introduced in TDS 7.4) 
+
+CekMDVersion     =   ULONGLONG          ; (introduced in TDS 7.4) 
+
+ParamCipherInfo  =   TYPE_INFO 
+                    EncryptionAlgo 
+                    [AlgoName] 
+                    EncryptionType 
+                    DatabaseId  
+                    CekId 
+                    CekVersion 
+                    CekMDVersion 
+                    NormVersion 
+ParameterData    =   ParamMetaData 
+                    ParamLenData 
+                    [ParamCipherInfo] 
+
+EnclavePackage   =   L_VARBYTE          ; (introduced in TDS 7.4) 
+
+BatchFlag        =   %x80 / %xFF        ; (changed to %xFF in TDS 7.2) 
+NoExecFlag       =   %xFE               ; (introduced in TDS 7.2) 
+
+RPCReqBatch      =   NameLenProcID 
+                    OptionFlags 
+                    *EnclavePackage 
+                    *ParameterData 
+
+RPCRequest       =   ALL_HEADERS 
+                    RPCReqBatch 
+                    *((BatchFlag / NoExecFlag) RPCReqBatch) 
+                    [BatchFlag / NoExecFlag] 
 ```
 
 ## Sequence Diagrams
 
 ### RPCRequest
+
+```ABNF
+RPCRequest       =   ALL_HEADERS 
+                    RPCReqBatch 
+                    *((BatchFlag / NoExecFlag) RPCReqBatch) 
+                    [BatchFlag / NoExecFlag] 
+```
 
 ```mermaid
 sequenceDiagram
@@ -119,6 +121,14 @@ sequenceDiagram
 
 ### RPCReqBatch
 
+```ABNF
+RPCReqBatch      =   NameLenProcID 
+                OptionFlags 
+                *EnclavePackage 
+                *ParameterData 
+
+```
+
 ```mermaid
 sequenceDiagram
   participant User
@@ -146,6 +156,12 @@ sequenceDiagram
 
 ### NameLenProcID
 
+```ABNF
+ NameLenProcID    =   ProcName 
+                      / 
+                      (ProcIDSwitch ProcID) 
+```
+
 ```mermaid
 sequenceDiagram
   participant User
@@ -161,6 +177,16 @@ sequenceDiagram
 
 ### OptionFlags
 
+```ABNF
+fWithRecomp      =   BIT 
+fNoMetaData      =   BIT 
+fReuseMetaData   =   BIT 
+OptionFlags      =   fWithRecomp 
+                    fNoMetaData 
+                    fReuseMetaData 
+                    13FRESERVEDBIT 
+```
+
 ```mermaid
 sequenceDiagram
   participant User
@@ -173,6 +199,18 @@ sequenceDiagram
 ```
 
 ### StatusFlags
+
+```ABNF
+
+fByRefValue      =   BIT 
+fDefaultValue    =   BIT 
+fEncrypted       =   BIT 
+StatusFlags      =   fByRefValue 
+                    fDefaultValue 
+                    1FRESERVEDBIT 
+                    fEncrypted 
+                    4FRESERVEDBIT 
+```
 
 ```mermaid
 sequenceDiagram
@@ -233,22 +271,5 @@ sequenceDiagram
   User->>System: ParamLenData (TYPE_VARBYTE)
   opt ParamCipherInfo
     User->>System: ParamCipherInfo
-  end
-```
-
-### RPCReqBatch
-
-```mermaid
-sequenceDiagram
-  participant User
-  participant System
-
-  User->>System: NameLenProcID
-  User->>System: OptionFlags
-  loop Zero or more times
-    User->>System: EnclavePackage (L_VARBYTE)
-  end
-  loop Zero or more times
-    User->>System: ParameterData
   end
 ```

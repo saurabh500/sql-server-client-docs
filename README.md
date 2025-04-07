@@ -27,3 +27,5 @@ I am working on writing up how SQL RPC works, some of the fragments are here.
 Refer to the [RPC execution documentation](./docs/areas/datatypes/rpc.md).
 
 Refer to the [Transaction manager](./docs/areas/transactions/transactionmanager.md)
+
+Type Info documentation is at [Type Info](./docs/areas/type_info/type_info.md)

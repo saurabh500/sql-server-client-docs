@@ -113,7 +113,27 @@ XML_INFO              = SCHEMA_PRESENT
                         [DbName OWNING_SCHEMA
                         XML_SCHEMA_COLLECTION]
 
-
+FIXEDLENTYPE = INT1TYPE
+                /
+                BITTYPE
+                /
+                INT2TYPE
+                /
+                INT4TYPE
+                /
+                DATETIM4TYPE
+                /
+                FLT4TYPE
+                /
+                MONEYTYPE
+                /
+                DATETIMETYPE
+                /
+                FLT8TYPE
+                /
+                MONEY4TYPE
+                /
+                INT8TYPE
 ```
 
 

@@ -115,3 +115,25 @@ XML_INFO              = SCHEMA_PRESENT
 
 
 ```
+
+
+## Diagram
+
+
+```mermaid
+flowchart TD
+  A[TYPE_INFO] -->|Option 1| B[FIXEDLENTYPE]
+  A -->|Option 2| C[VARLENTYPE]
+  A -->|Option 3| D[PARTLENTYPE]
+
+  C -->|Option 1| E[BYTELEN_TYPE]
+  C -->|Option 2| F[USHORTLEN_TYPE]
+  C -->|Option 3| G[LONGLEN_TYPE]
+
+  D -->|Option 1| H[XMLTYPE]
+  D -->|Option 2| I[BIGVARCHARTYPE]
+  D -->|Option 3| J[BIGVARBINARYTYPE]
+  D -->|Option 4| K[NVARCHARTYPE]
+  D -->|Option 5| L[UDTTYPE]
+  D -->|Option 6| M[JSONTYPE]
+```

@@ -82,6 +82,9 @@ RPCRequest       =   ALL_HEADERS
                     RPCReqBatch 
                     *((BatchFlag / NoExecFlag) RPCReqBatch) 
                     [BatchFlag / NoExecFlag] 
+
+
+TYPE_VARBYTE = GEN_NULL / CHARBIN_NULL / PLP_BODY / ([TYPE_VARLEN] *BYTE)
 ```
 
 ## Sequence Diagrams
@@ -319,3 +322,8 @@ sequenceDiagram
     User->>System: ParamCipherInfo
   end
 ```
+
+## Implementation notes
+
+TYPE_VARLEN in the ParameterData signifies that we only send the Nullable types of any datatypes, while sending RPC request.
+

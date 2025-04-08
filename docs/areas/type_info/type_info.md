@@ -8,20 +8,16 @@ It's scattered across the doc. This page consolidates it
 
 ```ABNF
 TYPE_INFO = FIXEDLENTYPE
-            /
-            (VARLENTYPE TYPE_VARLEN [COLLATION])
-            /
-            (VARLENTYPE TYPE_VARLEN [PRECISION SCALE])
-            /
-            (VARLENTYPE SCALE) ; (introduced in TDS 7.3)
-            /
-            VARLENTYPE ; (introduced in TDS 7.3)
-            /
-            (PARTLENTYPE
-            [USHORTMAXLEN]
-            [COLLATION]
-            [XML_INFO]
-            [UDT_INFO])
+            / (VARLENTYPE TYPE_VARLEN [COLLATION])
+            / (VARLENTYPE TYPE_VARLEN [PRECISION SCALE])
+            / (VARLENTYPE SCALE) ; (introduced in TDS 7.3)
+            / VARLENTYPE ; (introduced in TDS 7.3)
+            / (PARTLENTYPE
+                  [USHORTMAXLEN]
+                  [COLLATION]
+                  [XML_INFO]
+                  [UDT_INFO]
+              )
 
 VARLENTYPE = BYTELEN_TYPE 
              / USHORTLEN_TYPE 
@@ -32,13 +28,21 @@ TYPE_VARLEN = BYTELEN
               / LONGLEN
 
 LCID = 20BIT
+
 fIgnoreCase = BIT
+
 fIgnoreAccent = BIT
+
 fIgnoreWidth = BIT
+
 fIgnoreKana = BIT
+
 fBinary = BIT
+
 fBinary2 = BIT
+
 fUTF8 = BIT
+
 ColFlags = fIgnoreCase fIgnoreAccent fIgnoreKana fIgnoreWidth fBinary fBinary2 fUTF8 FRESERVEDBIT
 
 Version = 4BIT
@@ -100,4 +104,14 @@ PARTLENTYPE = XMLTYPE
               / NVARCHARTYPE
               / UDTTYPE
               / JSONTYPE
+
+SCHEMA_PRESENT        = BYTE;
+DbName                = B_VARCHAR
+OWNING_SCHEMA         = B_VARCHAR
+XML_SCHEMA_COLLECTION = US_VARCHAR
+XML_INFO              = SCHEMA_PRESENT
+                        [DbName OWNING_SCHEMA
+                        XML_SCHEMA_COLLECTION]
+
+
 ```
